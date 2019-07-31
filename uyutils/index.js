@@ -165,7 +165,21 @@ function createPinyin(con) {
   // console.log(str)
   return str
 }
-console.log = function() {} // 关闭所有打印
+
+function generateUUID() {
+  var d = new Date().getTime();
+  if (window.performance && typeof window.performance.now === "function") {
+    d += performance.now(); //use high-precision timer if available
+  }
+  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = (d + Math.random() * 16) % 16 | 0;
+    d = Math.floor(d / 16);
+    return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+  return uuid;
+}
+
+console.log = function () {} // 关闭所有打印
 module.exports = {
   //模块的代码逻辑
   randomWord: randomWord, // 获取随机数 // 生成3-32位随机串：randomWord(true, 3, 32)// 生成43位随机串：randomWord(false, 43)
@@ -173,10 +187,15 @@ module.exports = {
   sliceUrl: sliceUrl, // 截取url里面的任意参数值，两个参数（第一个url，第二个参数名字）
   numTurnWord: numTurnWord, //　阿拉伯数字转文字
   wordTurnNum: wordTurnNum, // 文字数字转为阿拉伯数字
-  createPinyin: createPinyin
+  createPinyin: createPinyin, // 文字转拼音
+  generateUUID: generateUUID // uuid
 }
 //npm --force unpublish 你的模块名，来删除发布的模块（超过24小时就不能删除了）
 // npm publish 模块名发布
-//  npm login 登录npm
+//  npm login 登录npm  u:uijwuynpm p:123
 // npm view 你的模块名，来查看模块是否发布成功
 // npm update <name> -g 全局   npm update <name> --save 生产环境   npm update <name> --save-dev 开发环境
+
+// npm config get registry 查看当前镜像
+// npm config set registry=http://registry.npmjs.org // 改为npm镜像 发布 
+// npm config set registry=https://registry.npm.taobao.org/  // 发布成功之后改回淘宝镜像
