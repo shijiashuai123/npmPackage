@@ -55,6 +55,13 @@ function sliceUrl(url, par) {
     return ''
   }
 }
+// 截取url2
+function getUrlParam(e, n) {
+    if (!e) throw new Error("parameter url is required.");
+    if (!n) throw new Error("parameter key is required.");
+    return decodeURIComponent(e).replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(n).replace(
+        /[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1").split("#")[0]
+}
 //　阿拉伯数字转文字 价格（一千五百三十二） 1532
 function numTurnWord(section) {
   var chnNumChar = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
